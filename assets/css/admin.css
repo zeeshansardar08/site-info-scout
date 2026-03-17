@@ -1,0 +1,147 @@
+/**
+ * Site Info Scout — Admin screen styles.
+ *
+ * All rules are scoped to .zigsiteinfoscout-wrap to prevent leaking
+ * into other admin pages. No external font imports. No !important abuse.
+ * Designed to complement the native WordPress admin UI.
+ */
+
+/* ── Layout ──────────────────────────────────────────────────────────────── */
+
+.zigsiteinfoscout-wrap {
+	max-width: 1200px;
+}
+
+.zigsiteinfoscout-tagline {
+	color: #646970;
+	margin-top: 0;
+	font-size: 14px;
+}
+
+/* Two-column responsive grid for the environment + theme cards. */
+.zigsiteinfoscout-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 20px;
+	margin-bottom: 20px;
+}
+
+@media screen and (max-width: 960px) {
+	.zigsiteinfoscout-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+
+.zigsiteinfoscout-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
+	padding: 16px 20px 20px;
+	margin-bottom: 20px;
+}
+
+.zigsiteinfoscout-card h2 {
+	margin-top: 0;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 16px;
+}
+
+/* Full-width card used by the plugins table and export bar. */
+.zigsiteinfoscout-card--full {
+	grid-column: 1 / -1;
+}
+
+/* ── Tables ──────────────────────────────────────────────────────────────── */
+
+.zigsiteinfoscout-table {
+	border: none;
+}
+
+.zigsiteinfoscout-table th,
+.zigsiteinfoscout-table td {
+	font-size: 13px;
+	padding: 7px 10px;
+}
+
+.zigsiteinfoscout-table th[scope="row"] {
+	font-weight: 600;
+	width: 45%;
+	white-space: nowrap;
+	background: #f9f9f9;
+}
+
+.zigsiteinfoscout-table .column-num {
+	width: 40px;
+}
+
+.zigsiteinfoscout-table .column-version {
+	width: 100px;
+}
+
+/* ── Value state indicators ───────────────────────────────────────────────── */
+
+/* Warning state — matches WP .notice-warning amber/yellow. */
+.zigsiteinfoscout-val--warning {
+	color: #996800;
+	font-weight: 600;
+}
+
+/* Info state — neutral highlight. */
+.zigsiteinfoscout-val--info {
+	color: #2271b1;
+	font-weight: 600;
+}
+
+/* ── Notices ─────────────────────────────────────────────────────────────── */
+
+/* Remove default WP notice margin when rendered inline inside .wrap. */
+.zigsiteinfoscout-notice {
+	margin-left: 0;
+}
+
+/* ── Export bar ─────────────────────────────────────────────────────────── */
+
+.zigsiteinfoscout-export-bar h2 {
+	border-bottom: none;
+	padding-bottom: 0;
+	margin-bottom: 4px;
+}
+
+.zigsiteinfoscout-export-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 12px;
+}
+
+.zigsiteinfoscout-copy-feedback {
+	margin-top: 10px;
+	font-size: 13px;
+	min-height: 20px;
+}
+
+.zigsiteinfoscout-copy-feedback--success {
+	color: #1d7a1d;
+	font-weight: 600;
+}
+
+.zigsiteinfoscout-copy-feedback--error {
+	color: #b32d2e;
+	font-weight: 600;
+}
+
+/* ── Print styles ────────────────────────────────────────────────────────── */
+
+@media print {
+	.zigsiteinfoscout-export-bar {
+		display: none;
+	}
+
+	.zigsiteinfoscout-notice {
+		border: 1px solid #ccc;
+		box-shadow: none;
+	}
+}

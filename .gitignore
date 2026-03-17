@@ -1,0 +1,52 @@
+# ── Build & Planning Documents ──────────────────────────────────────────────
+# Internal reference docs — never ship in the distributed plugin ZIP.
+Site-Info-Scout-Build-Reference.docx
+*.docx
+*.doc
+
+# ── OS & Editor Artifacts ────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── IDE / Editor ─────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# ── PHP Dependencies (not used in this plugin, but future-proof) ─────────────
+vendor/
+composer.lock
+
+# ── Node / Frontend Tooling (if added in future for build pipeline) ──────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+package-lock.json
+
+# ── Test Artifacts ────────────────────────────────────────────────────────────
+tests/
+.phpunit.result.cache
+phpunit.xml
+phpunit.xml.dist
+
+# ── PHPCS / Linting ───────────────────────────────────────────────────────────
+.phpcs-cache
+
+# ── Distribution ZIP ─────────────────────────────────────────────────────────
+# Prevent accidentally committing the release archive.
+*.zip
+
+# ── Environment & Secrets ─────────────────────────────────────────────────────
+.env
+.env.*
+wp-config.php
+
+# ── Logs & Temp ───────────────────────────────────────────────────────────────
+*.log
+/tmp/
