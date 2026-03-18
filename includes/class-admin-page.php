@@ -179,7 +179,7 @@ class Admin_Page {
 			<h2><?php esc_html_e( 'Insights & Recommendations', 'site-info-scout' ); ?></h2>
 			<?php if ( empty( $insights ) ) : ?>
 				<p class="zigsiteinfoscout-insights__none">
-					<?php esc_html_e( 'No recommendations at this time. Your site configuration looks healthy.', 'site-info-scout' ); ?>
+					<?php esc_html_e( 'No recommendations at this time. Your site configuration looks healthy based on the current checks.', 'site-info-scout' ); ?>
 				</p>
 			<?php else : ?>
 				<ul class="zigsiteinfoscout-insights__list">

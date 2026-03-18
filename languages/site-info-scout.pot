@@ -490,7 +490,7 @@ msgstr ""
 
 #. class-admin-page.php — render_insights() — healthy empty state
 #: includes/class-admin-page.php
-msgid "No recommendations at this time. Your site configuration looks healthy."
+msgid "No recommendations at this time. Your site configuration looks healthy based on the current checks."
 msgstr ""
 
 #. class-admin-page.php — render_health_score() — score card note
