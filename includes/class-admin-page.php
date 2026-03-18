@@ -264,7 +264,7 @@ class Admin_Page {
 			<h2>
 				<?php
 				/* translators: %d: Number of active plugins. */
-				printf( esc_html__( 'Active Plugins (%d)', 'site-info-scout' ), $count );
+				printf( esc_html__( 'Active Plugins (%d)', 'site-info-scout' ), absint( $count ) );
 				?>
 			</h2>
 

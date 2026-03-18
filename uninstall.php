@@ -21,9 +21,9 @@ function zigsiteinfoscout_uninstall_site() {
 }
 
 if ( is_multisite() ) {
-	$sites = get_sites( array( 'number' => 0 ) );
-	foreach ( $sites as $site ) {
-		switch_to_blog( $site->blog_id );
+	$zigsiteinfoscout_sites = get_sites( array( 'number' => 0 ) );
+	foreach ( $zigsiteinfoscout_sites as $zigsiteinfoscout_site ) {
+		switch_to_blog( $zigsiteinfoscout_site->blog_id );
 		zigsiteinfoscout_uninstall_site();
 		restore_current_blog();
 	}

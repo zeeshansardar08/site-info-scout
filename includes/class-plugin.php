@@ -92,7 +92,6 @@ class Plugin {
 	 * Registers all WordPress action hooks for the plugin.
 	 */
 	private function register_hooks() {
-		add_action( 'init',                 array( $this, 'load_textdomain' ) );
 		add_action( 'admin_menu',           array( $this, 'register_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
@@ -108,22 +107,6 @@ class Plugin {
 	}
 
 	// ── Public hook callbacks ──────────────────────────────────────────────
-
-	/**
-	 * Loads the plugin text domain for translations.
-	 *
-	 * The path is relative to WP_PLUGIN_DIR, as required by
-	 * load_plugin_textdomain().
-	 *
-	 * @since 1.0.0
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'site-info-scout',
-			false,
-			dirname( ZIGSITEINFOSCOUT_BASENAME ) . '/languages'
-		);
-	}
 
 	/**
 	 * Registers the admin Tools menu page.

@@ -1,0 +1,10 @@
+# Files and directories to exclude from the distribution ZIP.
+# Used by WP-CLI: wp dist-archive . --format=zip
+.git
+.gitignore
+.distignore
+node_modules
+vendor
+*.zip
+*.log
+tests

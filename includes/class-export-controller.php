@@ -97,7 +97,7 @@ class Export_Controller {
 
 		if ( $handle ) {
 			// UTF-8 BOM — required for correct character rendering in Excel on Windows.
-			fputs( $handle, "\xEF\xBB\xBF" );
+			fputs( $handle, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputs -- Writing to php://output stream for download; WP_Filesystem does not support streaming to output.
 
 			// Header row.
 			fputcsv( $handle, array( 'Type', 'Name', 'Version', 'File / Slug' ) );
@@ -125,7 +125,7 @@ class Export_Controller {
 				) );
 			}
 
-			fclose( $handle );
+			fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output stream handle; WP_Filesystem does not support streaming to output.
 		}
 
 		exit;
