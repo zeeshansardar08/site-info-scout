@@ -79,6 +79,17 @@ class Admin_Page {
 			)
 		);
 
+		// Build a human-friendly display timestamp using the site's date/time
+		// settings and timezone (wp_date() automatically applies WP timezone).
+		$ts_unix           = strtotime( $report['generated_at'] );
+		$generated_display = sprintf(
+			/* translators: 1: Formatted date. 2: Formatted time. 3: Timezone string e.g. UTC or America/New_York. */
+			__( '%1$s at %2$s (%3$s)', 'site-info-scout' ),
+			wp_date( get_option( 'date_format', 'F j, Y' ), $ts_unix ),
+			wp_date( get_option( 'time_format', 'g:i a' ), $ts_unix ),
+			wp_timezone_string()
+		);
+
 		// Generate nonce-protected export URLs.
 		$txt_url = wp_nonce_url(
 			admin_url( 'admin-post.php?action=zigsiteinfoscout_export_txt' ),
@@ -97,9 +108,9 @@ class Admin_Page {
 				&mdash;
 				<span class="zigsiteinfoscout-generated">
 					<?php printf(
-						/* translators: %s: Date and time the report was generated. */
+						/* translators: %s: Human-friendly date, time, and timezone string. */
 						esc_html__( 'Report generated: %s', 'site-info-scout' ),
-						esc_html( $report['generated_at'] )
+						esc_html( $generated_display )
 					); ?>
 				</span>
 			</p>
@@ -174,7 +185,12 @@ class Admin_Page {
 				<tbody>
 					<?php $this->env_row( __( 'WordPress Version', 'site-info-scout' ), $env['wp_version'] ); ?>
 					<?php $this->env_row( __( 'PHP Version', 'site-info-scout' ), $php['version'] ); ?>
-					<?php $this->env_row( __( 'PHP Architecture', 'site-info-scout' ), $php['architecture'] ); ?>
+					<?php $this->env_row(
+						__( 'PHP Architecture', 'site-info-scout' ),
+						$php['architecture'],
+						'',
+						__( '32-bit or 64-bit build of the PHP installation on this server.', 'site-info-scout' )
+					); ?>
 					<?php $this->env_row( __( 'Site URL', 'site-info-scout' ), $env['wp_site_url'] ); ?>
 					<?php $this->env_row( __( 'WordPress URL', 'site-info-scout' ), $env['wp_home_url'] ); ?>
 					<?php $this->env_row( __( 'Multisite', 'site-info-scout' ), $env['is_multisite'] ? __( 'Yes', 'site-info-scout' ) : __( 'No', 'site-info-scout' ) ); ?>
@@ -192,7 +208,12 @@ class Admin_Page {
 						$env['wp_debug_log'] ? 'zigsiteinfoscout-val--warning' : ''
 					);
 					?>
-					<?php $this->env_row( __( 'SCRIPT_DEBUG', 'site-info-scout' ), $env['script_debug'] ? __( 'Enabled', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ) ); ?>
+					<?php $this->env_row(
+						__( 'SCRIPT_DEBUG', 'site-info-scout' ),
+						$env['script_debug'] ? __( 'Enabled', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ),
+						'',
+						__( 'When enabled, WordPress loads unminified CSS/JS assets. Disable on production sites.', 'site-info-scout' )
+					); ?>
 					<?php
 					$this->env_row(
 						__( 'DISABLE_WP_CRON', 'site-info-scout' ),
@@ -201,7 +222,12 @@ class Admin_Page {
 					);
 					?>
 					<?php $this->env_row( __( 'WP Memory Limit', 'site-info-scout' ), $env['wp_memory_limit'] ); ?>
-					<?php $this->env_row( __( 'WP Max Memory Limit', 'site-info-scout' ), $env['wp_max_memory_limit'] ); ?>
+					<?php $this->env_row(
+						__( 'WP Max Memory Limit', 'site-info-scout' ),
+						$env['wp_max_memory_limit'],
+						'',
+						__( 'Hard ceiling set by the host. WordPress and plugins cannot allocate memory beyond this value.', 'site-info-scout' )
+					); ?>
 					<?php $this->env_row( __( 'PHP Memory Limit', 'site-info-scout' ), $php['memory_limit'] ); ?>
 					<?php $this->env_row( __( 'PHP Max Execution', 'site-info-scout' ), $php['max_execution'] . 's' ); ?>
 					<?php $this->env_row( __( 'PHP Max Input Vars', 'site-info-scout' ), $php['max_input_vars'] ); ?>
@@ -209,7 +235,12 @@ class Admin_Page {
 					<?php $this->env_row( __( 'PHP Upload Max', 'site-info-scout' ), $php['upload_max_size'] ); ?>
 					<?php $this->env_row( __( 'PHP Display Errors', 'site-info-scout' ), $php['display_errors'] ); ?>
 					<?php $this->env_row( __( 'Server Software', 'site-info-scout' ), $srv['software'] ); ?>
-					<?php $this->env_row( __( 'PHP SAPI', 'site-info-scout' ), $srv['php_sapi'] ); ?>
+					<?php $this->env_row(
+						__( 'PHP SAPI', 'site-info-scout' ),
+						$srv['php_sapi'],
+						'',
+						__( 'How PHP connects to the web server (e.g. fpm-fcgi, apache2handler, cli).', 'site-info-scout' )
+					); ?>
 				</tbody>
 			</table>
 		</div>
@@ -344,15 +375,21 @@ class Admin_Page {
 	 * Both label and value are escaped inside this method.
 	 * Never pass pre-escaped strings to this method.
 	 *
-	 * @param string $label     Already-translated row label. Escaped internally.
-	 * @param string $value     Raw row value. Escaped internally.
+	 * @param string $label       Already-translated row label. Escaped internally.
+	 * @param string $value       Raw row value. Escaped internally.
 	 * @param string $value_class Optional CSS class for the value <td>.
+	 * @param string $help        Optional short help text shown below the label.
 	 */
-	private function env_row( $label, $value, $value_class = '' ) {
+	private function env_row( $label, $value, $value_class = '', $help = '' ) {
 		$class_attr = $value_class ? ' class="' . esc_attr( $value_class ) . '"' : '';
 		?>
 		<tr>
-			<th scope="row"><?php echo esc_html( $label ); ?></th>
+			<th scope="row">
+				<?php echo esc_html( $label ); ?>
+				<?php if ( $help ) : ?>
+					<span class="zigsiteinfoscout-field-desc"><?php echo esc_html( $help ); ?></span>
+				<?php endif; ?>
+			</th>
 			<td<?php echo $class_attr; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Value is esc_attr'd above. ?>><?php echo esc_html( $value ); ?></td>
 		</tr>
 		<?php

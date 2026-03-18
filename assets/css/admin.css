@@ -79,6 +79,17 @@
 	background: #f9f9f9;
 }
 
+/* Subtle help text rendered below a technical field label. */
+.zigsiteinfoscout-field-desc {
+	display: block;
+	font-size: 11px;
+	font-weight: 400;
+	color: #646970;
+	white-space: normal;
+	margin-top: 2px;
+	line-height: 1.4;
+}
+
 .zigsiteinfoscout-table .column-num {
 	width: 40px;
 }
