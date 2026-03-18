@@ -8,7 +8,7 @@ Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Generate a clean, support-ready site report in one click — with a health score, actionable insights, and a smart summary built for copy-paste into any support ticket.
+Generate a support-ready site report in one click — health score, actionable insights, and a smart summary built for copy-paste support tickets.
 
 == Description ==
 
