@@ -62,19 +62,25 @@ class Admin_Page {
 			wp_die( esc_html__( 'You do not have permission to view this page.', 'site-info-scout' ) );
 		}
 
-		$report     = $this->environment_report->get_report();
-		$flags      = $this->health_checks->evaluate( $report );
-		$plain_text = $this->export_controller->build_txt_output( $report );
+		$report          = $this->environment_report->get_report();
+		$flags           = $this->health_checks->evaluate( $report );
+		$score           = $this->health_checks->get_health_score( $report );
+		$insights        = $this->health_checks->get_insights( $report );
+		$plain_text      = $this->export_controller->build_txt_output( $report );
+		$support_summary = $this->export_controller->build_support_summary_output( $report, $flags, $insights );
 
 		// Supply the report text and i18n strings to admin.js.
 		wp_localize_script(
 			'zigsiteinfoscout-admin',
 			'zigsiteinfoscoutData',
 			array(
-				'report' => $plain_text,
-				'i18n'   => array(
-					'copied'     => __( 'Report copied to clipboard!', 'site-info-scout' ),
-					'copyFailed' => __( 'Copy failed. Please use the Download TXT button instead.', 'site-info-scout' ),
+				'report'         => $plain_text,
+				'supportSummary' => $support_summary,
+				'i18n'           => array(
+					'copied'          => __( 'Report copied to clipboard!', 'site-info-scout' ),
+					'copyFailed'      => __( 'Copy failed. Please use the Download TXT button instead.', 'site-info-scout' ),
+					'summaryCopied'   => __( 'Support summary copied to clipboard!', 'site-info-scout' ),
+					'summaryCopyFail' => __( 'Copy failed. Please try again.', 'site-info-scout' ),
 				),
 			)
 		);
@@ -103,6 +109,7 @@ class Admin_Page {
 		?>
 		<div class="wrap zigsiteinfoscout-wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+			<?php $this->render_health_score( $score ); ?>
 			<p class="zigsiteinfoscout-tagline">
 				<?php esc_html_e( 'A read-only support snapshot of this WordPress site. No data is sent externally.', 'site-info-scout' ); ?>
 				&mdash;
@@ -116,6 +123,7 @@ class Admin_Page {
 			</p>
 
 			<?php $this->render_health_flags( $flags ); ?>
+			<?php $this->render_insights( $insights ); ?>
 
 			<div class="zigsiteinfoscout-grid">
 				<?php $this->render_environment_card( $report ); ?>
@@ -129,6 +137,66 @@ class Admin_Page {
 	}
 
 	// ── Private render sections ────────────────────────────────────────────
+
+	/**
+	 * Renders the site health score badge.
+	 *
+	 * @param int $score Calculated score from Health_Checks::get_health_score().
+	 */
+	private function render_health_score( $score ) {
+		if ( $score >= 80 ) {
+			$score_class = 'zigsiteinfoscout-score--good';
+			$score_label = __( 'Good', 'site-info-scout' );
+		} elseif ( $score >= 50 ) {
+			$score_class = 'zigsiteinfoscout-score--fair';
+			$score_label = __( 'Fair', 'site-info-scout' );
+		} else {
+			$score_class = 'zigsiteinfoscout-score--poor';
+			$score_label = __( 'Needs Attention', 'site-info-scout' );
+		}
+		?>
+		<div class="zigsiteinfoscout-score-bar">
+			<span class="zigsiteinfoscout-score-label">
+				<?php esc_html_e( 'Health Score:', 'site-info-scout' ); ?>
+			</span>
+			<span class="zigsiteinfoscout-score-badge <?php echo esc_attr( $score_class ); ?>">
+				<?php
+				printf(
+					/* translators: 1: Numeric score 0-100. 2: Score label e.g. Good, Fair, Needs Attention. */
+					esc_html__( '%1$d / 100 — %2$s', 'site-info-scout' ),
+					intval( $score ),
+					esc_html( $score_label )
+				);
+				?>
+			</span>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Renders the Insights & Recommendations section.
+	 *
+	 * Skipped entirely when no insights are generated (healthy site).
+	 *
+	 * @param array $insights Actionable insights from Health_Checks::get_insights().
+	 */
+	private function render_insights( array $insights ) {
+		if ( empty( $insights ) ) {
+			return;
+		}
+		?>
+		<div class="zigsiteinfoscout-card zigsiteinfoscout-card--full zigsiteinfoscout-insights">
+			<h2><?php esc_html_e( 'Insights &amp; Recommendations', 'site-info-scout' ); ?></h2>
+			<?php foreach ( $insights as $insight ) :
+				$notice_class = ( 'warning' === $insight['severity'] ) ? 'notice-warning' : 'notice-info';
+				?>
+				<div class="notice <?php echo esc_attr( $notice_class ); ?> zigsiteinfoscout-notice zigsiteinfoscout-insight-item">
+					<p><?php echo esc_html( $insight['message'] ); ?></p>
+				</div>
+			<?php endforeach; ?>
+		</div>
+		<?php
+	}
 
 	/**
 	 * Renders the health flags section.
@@ -340,22 +408,37 @@ class Admin_Page {
 			<p><?php esc_html_e( 'Download or copy the site report to share with your support team.', 'site-info-scout' ); ?></p>
 
 			<div class="zigsiteinfoscout-export-actions">
+				<a href="<?php echo esc_url( $txt_url ); ?>" class="button button-primary">
+					<?php esc_html_e( 'Download TXT Report', 'site-info-scout' ); ?>
+				</a>
+
+				<button
+					type="button"
+					id="zigsiteinfoscout-summary-btn"
+					class="button button-secondary"
+				>
+					<?php esc_html_e( 'Copy Support Summary', 'site-info-scout' ); ?>
+				</button>
+
 				<button
 					type="button"
 					id="zigsiteinfoscout-copy-btn"
 					class="button button-secondary"
 				>
-					<?php esc_html_e( 'Copy Report to Clipboard', 'site-info-scout' ); ?>
+					<?php esc_html_e( 'Copy Full Report', 'site-info-scout' ); ?>
 				</button>
-
-				<a href="<?php echo esc_url( $txt_url ); ?>" class="button button-primary">
-					<?php esc_html_e( 'Download TXT Report', 'site-info-scout' ); ?>
-				</a>
 
 				<a href="<?php echo esc_url( $csv_url ); ?>" class="button button-secondary">
 					<?php esc_html_e( 'Export CSV Inventory', 'site-info-scout' ); ?>
 				</a>
 			</div>
+
+			<div
+				id="zigsiteinfoscout-summary-feedback"
+				class="zigsiteinfoscout-copy-feedback"
+				aria-live="polite"
+				aria-atomic="true"
+			></div>
 
 			<div
 				id="zigsiteinfoscout-copy-feedback"

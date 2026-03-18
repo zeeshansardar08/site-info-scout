@@ -119,6 +119,54 @@
 	margin-left: 0;
 }
 
+/* ── Health Score ────────────────────────────────────────────────────────── */
+
+.zigsiteinfoscout-score-bar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin: 4px 0 18px;
+}
+
+.zigsiteinfoscout-score-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2327;
+}
+
+.zigsiteinfoscout-score-badge {
+	display: inline-block;
+	padding: 3px 14px;
+	border-radius: 3px;
+	font-size: 13px;
+	font-weight: 700;
+	line-height: 1.6;
+	color: #fff;
+}
+
+.zigsiteinfoscout-score--good {
+	background: #1d7a1d;
+}
+
+.zigsiteinfoscout-score--fair {
+	background: #996800;
+}
+
+.zigsiteinfoscout-score--poor {
+	background: #b32d2e;
+}
+
+/* ── Insights & Recommendations ─────────────────────────────────────────── */
+
+.zigsiteinfoscout-insights {
+	margin-bottom: 20px;
+}
+
+.zigsiteinfoscout-insight-item {
+	margin: 8px 0 0;
+	box-shadow: none;
+}
+
 /* ── Export bar ─────────────────────────────────────────────────────────── */
 
 .zigsiteinfoscout-export-bar h2 {

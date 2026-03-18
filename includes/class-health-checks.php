@@ -42,6 +42,127 @@ class Health_Checks {
 		return array_values( array_filter( $checks ) );
 	}
 
+	/**
+	 * Calculates a deterministic 0–100 health score based on detected issues.
+	 *
+	 * Starts at 100 and deducts points for each condition triggered.
+	 * Score is clamped to the 0–100 range.
+	 *
+	 * Deductions:
+	 *   WP_DEBUG enabled        -20
+	 *   WP_DEBUG_LOG enabled    -10
+	 *   PHP below recommended   -15
+	 *   Memory below 64 MB      -15
+	 *   Plugin count ≥ threshold -10
+	 *   DISABLE_WP_CRON enabled  -10
+	 *
+	 * @since 1.1.0
+	 * @param array $report Normalized report from Environment_Report::get_report().
+	 * @return int Score between 0 and 100 inclusive.
+	 */
+	public function get_health_score( array $report ) {
+		$score = 100;
+		$min   = zigsiteinfoscout_get_php_min_recommended();
+
+		if ( true === $report['environment']['wp_debug'] ) {
+			$score -= 20;
+		}
+		if ( true === $report['environment']['wp_debug_log'] ) {
+			$score -= 10;
+		}
+		if ( version_compare( $report['php']['version'], $min, '<' ) ) {
+			$score -= 15;
+		}
+		$bytes = zigsiteinfoscout_convert_memory_to_bytes( $report['php']['memory_limit'] );
+		if ( $bytes < 67108864 ) { // 64 MB threshold.
+			$score -= 15;
+		}
+		if ( count( $report['plugins'] ) >= ZIGSITEINFOSCOUT_HIGH_PLUGIN_THRESHOLD ) {
+			$score -= 10;
+		}
+		if ( true === $report['environment']['wp_cron_disabled'] ) {
+			$score -= 10;
+		}
+
+		return max( 0, min( 100, $score ) );
+	}
+
+	/**
+	 * Generates actionable, plain-language insight messages for the current environment.
+	 *
+	 * Insights provide verbose developer-friendly explanations, suitable for
+	 * display in an "Insights & Recommendations" section and for inclusion in
+	 * the Smart Support Summary plain-text output.
+	 *
+	 * @since 1.1.0
+	 * @param array $report Normalized report from Environment_Report::get_report().
+	 * @return array[] Each entry: { severity ('warning'|'info'), message (string) }.
+	 */
+	public function get_insights( array $report ) {
+		$insights = array();
+		$min      = zigsiteinfoscout_get_php_min_recommended();
+
+		if ( true === $report['environment']['wp_debug'] ) {
+			$insights[] = array(
+				'severity' => 'warning',
+				'message'  => __( 'WP_DEBUG is enabled — this may expose PHP errors and notices to site visitors. Disable on all production sites.', 'site-info-scout' ),
+			);
+		}
+
+		if ( true === $report['environment']['wp_debug_log'] ) {
+			$insights[] = array(
+				'severity' => 'warning',
+				'message'  => __( 'Debug logging is enabled — ensure the debug.log file is not publicly accessible via a direct URL.', 'site-info-scout' ),
+			);
+		}
+
+		if ( version_compare( $report['php']['version'], $min, '<' ) ) {
+			$insights[] = array(
+				'severity' => 'warning',
+				/* translators: 1: Current PHP version string. 2: Minimum recommended PHP version string. */
+				'message'  => sprintf(
+					__( 'PHP %1$s is below the recommended minimum of %2$s. Older PHP versions may lack security patches and performance improvements. Contact your host to upgrade.', 'site-info-scout' ),
+					$report['php']['version'],
+					$min
+				),
+			);
+		}
+
+		$bytes = zigsiteinfoscout_convert_memory_to_bytes( $report['php']['memory_limit'] );
+		if ( $bytes < 67108864 ) {
+			$insights[] = array(
+				'severity' => 'warning',
+				/* translators: %s: Current PHP memory_limit value, e.g. '32M'. */
+				'message'  => sprintf(
+					__( 'Low PHP memory limit (%s) — this may cause plugin failures or slow admin performance. WordPress recommends at least 64 MB; 256 MB is ideal for complex sites.', 'site-info-scout' ),
+					$report['php']['memory_limit']
+				),
+			);
+		}
+
+		$plugin_count = count( $report['plugins'] );
+		if ( $plugin_count >= ZIGSITEINFOSCOUT_HIGH_PLUGIN_THRESHOLD ) {
+			$insights[] = array(
+				'severity' => 'info',
+				/* translators: 1: Number of active plugins. 2: The high plugin count threshold number. */
+				'message'  => sprintf(
+					__( 'High number of active plugins (%1$d) — running %2$d or more plugins may increase page load times and the risk of conflicts. Review and deactivate unused plugins.', 'site-info-scout' ),
+					$plugin_count,
+					ZIGSITEINFOSCOUT_HIGH_PLUGIN_THRESHOLD
+				),
+			);
+		}
+
+		if ( true === $report['environment']['wp_cron_disabled'] ) {
+			$insights[] = array(
+				'severity' => 'info',
+				'message'  => __( 'WordPress Cron is disabled — scheduled events will not run automatically via page loads. Ensure a real server-side cron job is configured to trigger wp-cron.php.', 'site-info-scout' ),
+			);
+		}
+
+		return $insights;
+	}
+
 	// ── Individual checks ──────────────────────────────────────────────────
 
 	/**
