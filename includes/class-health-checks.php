@@ -119,8 +119,8 @@ class Health_Checks {
 		if ( version_compare( $report['php']['version'], $min, '<' ) ) {
 			$insights[] = array(
 				'severity' => 'warning',
-				/* translators: 1: Current PHP version string. 2: Minimum recommended PHP version string. */
 				'message'  => sprintf(
+					/* translators: 1: Current PHP version string. 2: Minimum recommended PHP version string. */
 					__( 'PHP %1$s is below the recommended minimum of %2$s. Older PHP versions may lack security patches and performance improvements. Contact your host to upgrade.', 'site-info-scout' ),
 					$report['php']['version'],
 					$min
@@ -132,8 +132,8 @@ class Health_Checks {
 		if ( $bytes < 67108864 ) {
 			$insights[] = array(
 				'severity' => 'warning',
-				/* translators: %s: Current PHP memory_limit value, e.g. '32M'. */
 				'message'  => sprintf(
+					/* translators: %s: Current PHP memory_limit value, e.g. '32M'. */
 					__( 'Low PHP memory limit (%s) — this may cause plugin failures or slow admin performance. WordPress recommends at least 64 MB; 256 MB is ideal for complex sites.', 'site-info-scout' ),
 					$report['php']['memory_limit']
 				),
@@ -144,8 +144,8 @@ class Health_Checks {
 		if ( $plugin_count >= ZIGSITEINFOSCOUT_HIGH_PLUGIN_THRESHOLD ) {
 			$insights[] = array(
 				'severity' => 'info',
-				/* translators: 1: Number of active plugins. 2: The high plugin count threshold number. */
 				'message'  => sprintf(
+					/* translators: 1: Number of active plugins. 2: The high plugin count threshold number. */
 					__( 'High number of active plugins (%1$d) — running %2$d or more plugins may increase page load times and the risk of conflicts. Review and deactivate unused plugins.', 'site-info-scout' ),
 					$plugin_count,
 					ZIGSITEINFOSCOUT_HIGH_PLUGIN_THRESHOLD
