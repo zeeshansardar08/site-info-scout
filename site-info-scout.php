@@ -3,7 +3,7 @@
  * Plugin Name:       Site Info Scout
  * Plugin URI:        https://wordpress.org/plugins/site-info-scout/
  * Description:       Generate a support-ready site report with environment details, active plugins, theme info, and diagnostic flags.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            Zignites
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // ── Constants ──────────────────────────────────────────────────────────────
 
 /** Plugin version. */
-define( 'ZIGSITEINFOSCOUT_VERSION', '1.0.0' );
+define( 'ZIGSITEINFOSCOUT_VERSION', '1.1.0' );
 
 /** Absolute path to the plugin directory (with trailing slash). */
 define( 'ZIGSITEINFOSCOUT_DIR', plugin_dir_path( __FILE__ ) );

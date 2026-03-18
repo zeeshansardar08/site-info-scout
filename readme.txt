@@ -4,11 +4,11 @@ Tags: diagnostics, site info, support, environment, debug
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Generate a support-ready site report with environment details, active plugins, theme info, and diagnostic flags.
+Generate a support-ready site report in one click — health score, actionable insights, and a smart summary built for copy-paste support tickets.
 
 == Description ==
 
@@ -22,6 +22,9 @@ Site Info Scout is a lightweight, admin-only diagnostic plugin for WordPress. It
 * Active theme and parent theme information
 * Debug constants and cron status
 * Health flags for common support issues
+* **Site Health Score** — a 0–100 score summarising your site's diagnostic state at a glance
+* **Insights & Recommendations** — plain-language explanations and next steps for every flagged condition
+* **Smart Support Summary** — a compact, copy-ready snapshot formatted for support tickets and forums
 
 **Health flags include:**
 
@@ -35,8 +38,9 @@ Site Info Scout is a lightweight, admin-only diagnostic plugin for WordPress. It
 **Export options:**
 
 * Download a plain-text (.txt) report for email or ticket submission
+* Copy the Smart Support Summary to clipboard — condensed and formatted for support tickets
+* Copy the full technical report to clipboard with one click (HTTPS and HTTP fallback)
 * Export a CSV inventory of active plugins and theme for spreadsheet use
-* Copy the full report to clipboard with one click (HTTPS and HTTP fallback)
 
 **What it never does:**
 
@@ -92,6 +96,14 @@ The copy button uses a textarea fallback automatically when the Clipboard API is
 
 == Changelog ==
 
+= 1.1.0 =
+* New: Site Health Score — a 0–100 integer score computed from diagnostic flags, displayed as a colour-coded badge (Good / Fair / Needs Attention) directly under the page heading.
+* New: Insights & Recommendations — a full-width card listing plain-language explanations and suggested fixes for every active health flag.
+* New: Smart Support Summary — a compact, clipboard-ready snapshot (environment, issues, plugins, theme, notes) formatted for support tickets, generated via the new "Copy Support Summary" button.
+* New: Four-action export bar with clear visual hierarchy: Download TXT (primary), Copy Support Summary, Copy Full Report, Export CSV.
+* Improved: Copy feedback now uses separate display areas for the support summary and the full report copy actions.
+* Improved: Score and insights leverage the same flag evaluation pass as the health checks, keeping computation lightweight.
+
 = 1.0.0 =
 * Initial release.
 * Environment summary: WordPress version, PHP version, site URL, multisite status, memory limits, debug constants, cron disabled status, and server software.
@@ -106,6 +118,9 @@ The copy button uses a textarea fallback automatically when the Clipboard API is
 * Zero remote requests.
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+Adds Site Health Score, Insights & Recommendations, and Smart Support Summary. No database changes. Safe to upgrade.
 
 = 1.0.0 =
 Initial release.

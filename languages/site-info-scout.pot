@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Site Info Scout 1.0.0\n"
+"Project-Id-Version: Site Info Scout 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/site-info-scout\n"
 "POT-Creation-Date: 2026-03-18T00:00:00+00:00\n"
 "MIME-Version: 1.0\n"
@@ -370,3 +370,148 @@ msgstr ""
 msgid "Export CSV Inventory"
 msgstr ""
 
+
+#. NEW in 1.1.0 ─────────────────────────────────────────────────────────────
+
+#. class-health-checks.php — get_health_score()
+#: includes/class-health-checks.php
+msgid "Good"
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "Fair"
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "Needs Attention"
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "Health Score"
+msgstr ""
+
+#. translators: 1: numeric score 0-100, 2: label such as "Good"
+#: includes/class-health-checks.php
+#: includes/class-admin-page.php
+msgid "%d / 100 — %s"
+msgstr ""
+
+#. class-health-checks.php — get_insights()
+#: includes/class-health-checks.php
+msgid "WP_DEBUG is enabled. This reveals PHP errors and notices on every page, which may expose sensitive information to visitors. Disable it in wp-config.php by setting `define( 'WP_DEBUG', false );` before going live."
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "WP_DEBUG_LOG is active. PHP errors are being written to a log file (usually wp-content/debug.log). This file is publicly accessible by default. Either protect it with server rules or set `define( 'WP_DEBUG_LOG', false );` to stop logging."
+msgstr ""
+
+#. translators: %s is the minimum recommended PHP version string, e.g. "8.0"
+#: includes/class-health-checks.php
+msgid "Your PHP version is below the recommended minimum of %s. Older PHP versions no longer receive security patches. Ask your host to upgrade to PHP 8.0 or later."
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "PHP memory limit is below 64 MB. WordPress and many plugins need at least 64 MB to run reliably. Contact your host or increase `memory_limit` in php.ini or wp-config.php."
+msgstr ""
+
+#. translators: %d is the plugin count threshold integer
+#: includes/class-health-checks.php
+msgid "You have %d or more active plugins. While not a hard limit, a large number of plugins increases the risk of conflicts and slows down administration. Deactivate any plugins you are not actively using."
+msgstr ""
+
+#: includes/class-health-checks.php
+msgid "DISABLE_WP_CRON is enabled without evidence of an alternative cron job. WordPress scheduled tasks (updates, publishing, emails) will not run unless your server calls wp-cron.php on a schedule. Configure a server-side cron job to call `wp-cron.php?doing_wp_cron` at least once per minute."
+msgstr ""
+
+#. class-export-controller.php — build_support_summary_output()
+#: includes/class-export-controller.php
+msgid "Site Info Scout Report"
+msgstr ""
+
+#: includes/class-export-controller.php
+msgid "Environment"
+msgstr ""
+
+#. translators: %s is the WordPress version string
+#: includes/class-export-controller.php
+msgid "WP: %s"
+msgstr ""
+
+#. translators: %s is the PHP version string
+#: includes/class-export-controller.php
+msgid "PHP: %s"
+msgstr ""
+
+#. translators: %s is the server software string
+#: includes/class-export-controller.php
+msgid "Server: %s"
+msgstr ""
+
+#. translators: %s is the memory limit string, e.g. "256M"
+#: includes/class-export-controller.php
+msgid "Memory: %s"
+msgstr ""
+
+#: includes/class-export-controller.php
+msgid "Issues Detected"
+msgstr ""
+
+#: includes/class-export-controller.php
+msgid "No Issues Detected"
+msgstr ""
+
+#. translators: %d is the number of active plugins
+#: includes/class-export-controller.php
+msgid "Active Plugins (%d)"
+msgstr ""
+
+#. translators: 1: plugin name, 2: plugin version
+#: includes/class-export-controller.php
+msgid "%1$s v%2$s"
+msgstr ""
+
+#: includes/class-export-controller.php
+msgid "Theme"
+msgstr ""
+
+#. translators: %s is the theme name
+#: includes/class-export-controller.php
+msgid "Parent: %s"
+msgstr ""
+
+#: includes/class-export-controller.php
+msgid "Notes"
+msgstr ""
+
+#. class-admin-page.php — render_insights() heading
+#: includes/class-admin-page.php
+msgid "Insights & Recommendations"
+msgstr ""
+
+#. class-admin-page.php — render_insights() — healthy empty state
+#: includes/class-admin-page.php
+msgid "No recommendations at this time. Your site configuration looks healthy based on the current checks."
+msgstr ""
+
+#. class-admin-page.php — render_health_score() — score card note
+#: includes/class-admin-page.php
+msgid "Health Score — based on common support-risk indicators."
+msgstr ""
+
+#. class-admin-page.php — render_export_bar()
+#: includes/class-admin-page.php
+msgid "Copy Support Summary"
+msgstr ""
+
+#: includes/class-admin-page.php
+msgid "Copy Full Report"
+msgstr ""
+
+#. localize_script — new i18n keys
+#: includes/class-admin-page.php
+msgid "Support summary copied to clipboard!"
+msgstr ""
+
+#: includes/class-admin-page.php
+msgid "Copy failed. Please try again."
+msgstr ""
