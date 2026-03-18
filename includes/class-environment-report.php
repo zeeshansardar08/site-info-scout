@@ -23,6 +23,7 @@ class Environment_Report {
 	/**
 	 * Returns the full normalized report array.
 	 *
+	 * @since 1.0.0
 	 * @return array {
 	 *     @type string $generated_at  MySQL-format timestamp using the site's local time.
 	 *     @type array  $environment   WordPress-level environment data.
@@ -138,7 +139,6 @@ class Environment_Report {
 				'name'    => $data['Name'],
 				'version' => $data['Version'],
 				'file'    => $plugin_file,
-				'active'  => true,
 			);
 		}
 

@@ -24,6 +24,7 @@ class Health_Checks {
 	 *
 	 * An empty return value means all checks passed.
 	 *
+	 * @since 1.0.0
 	 * @param array $report Normalized report from Environment_Report::get_report().
 	 * @return array[] Each flag: { id, label, message, severity ('warning'|'info') }.
 	 */

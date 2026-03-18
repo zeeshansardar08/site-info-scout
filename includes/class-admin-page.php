@@ -54,6 +54,8 @@ class Admin_Page {
 
 	/**
 	 * Renders the full admin page. Registered as the menu page callback.
+	 *
+	 * @since 1.0.0
 	 */
 	public function render() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -92,6 +94,14 @@ class Admin_Page {
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<p class="zigsiteinfoscout-tagline">
 				<?php esc_html_e( 'A read-only support snapshot of this WordPress site. No data is sent externally.', 'site-info-scout' ); ?>
+				&mdash;
+				<span class="zigsiteinfoscout-generated">
+					<?php printf(
+						/* translators: %s: Date and time the report was generated. */
+						esc_html__( 'Report generated: %s', 'site-info-scout' ),
+						esc_html( $report['generated_at'] )
+					); ?>
+				</span>
 			</p>
 
 			<?php $this->render_health_flags( $flags ); ?>
@@ -311,7 +321,7 @@ class Admin_Page {
 					<?php esc_html_e( 'Download TXT Report', 'site-info-scout' ); ?>
 				</a>
 
-				<a href="<?php echo esc_url( $csv_url ); ?>" class="button button-primary">
+				<a href="<?php echo esc_url( $csv_url ); ?>" class="button button-secondary">
 					<?php esc_html_e( 'Export CSV Inventory', 'site-info-scout' ); ?>
 				</a>
 			</div>

@@ -18,6 +18,12 @@
 	font-size: 14px;
 }
 
+.zigsiteinfoscout-generated {
+	font-style: italic;
+	font-size: 13px;
+	white-space: nowrap;
+}
+
 /* Two-column responsive grid for the environment + theme cards. */
 .zigsiteinfoscout-grid {
 	display: grid;
