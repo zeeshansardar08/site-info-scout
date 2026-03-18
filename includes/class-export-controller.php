@@ -42,6 +42,8 @@ class Export_Controller {
 	 * Handles plain-text report download.
 	 *
 	 * Hooked to: admin_post_zigsiteinfoscout_export_txt
+	 *
+	 * @since 1.0.0
 	 */
 	public function handle_txt_export() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -71,6 +73,8 @@ class Export_Controller {
 	 * Handles CSV plugin inventory download.
 	 *
 	 * Hooked to: admin_post_zigsiteinfoscout_export_csv
+	 *
+	 * @since 1.0.0
 	 */
 	public function handle_csv_export() {
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -93,7 +97,7 @@ class Export_Controller {
 
 		if ( $handle ) {
 			// UTF-8 BOM — required for correct character rendering in Excel on Windows.
-			fputs( $handle, "\xEF\xBB\xBF" );
+			fputs( $handle, "\xEF\xBB\xBF" ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fputs -- Writing to php://output stream for download; WP_Filesystem does not support streaming to output.
 
 			// Header row.
 			fputcsv( $handle, array( 'Type', 'Name', 'Version', 'File / Slug' ) );
@@ -121,7 +125,7 @@ class Export_Controller {
 				) );
 			}
 
-			fclose( $handle );
+			fclose( $handle ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closing php://output stream handle; WP_Filesystem does not support streaming to output.
 		}
 
 		exit;
@@ -135,6 +139,7 @@ class Export_Controller {
 	 * This method is public so Admin_Page can call it to supply the
 	 * clipboard copy text without duplicating the formatting logic.
 	 *
+	 * @since 1.0.0
 	 * @param array $data Normalized report from Environment_Report::get_report().
 	 * @return string Full plain-text report.
 	 */
@@ -142,53 +147,56 @@ class Export_Controller {
 		$sep = str_repeat( '=', 45 );
 		$nl  = PHP_EOL;
 
-		$env = $data['environment'];
-		$php = $data['php'];
-		$srv = $data['server'];
+		$env      = $data['environment'];
+		$php      = $data['php'];
+		$srv      = $data['server'];
+		$timezone = wp_timezone_string();
 
 		$out  = $sep . $nl;
-		$out .= 'SITE INFO SCOUT -- SITE REPORT' . $nl;
-		$out .= 'Generated : ' . $data['generated_at'] . $nl;
+		$out .= __( 'SITE INFO SCOUT -- SITE REPORT', 'site-info-scout' ) . $nl;
+		/* translators: 1: Date/time string. 2: Timezone identifier e.g. America/New_York. */
+		$out .= sprintf( __( 'Generated  : %1$s (%2$s)', 'site-info-scout' ), $data['generated_at'], $timezone ) . $nl;
 		$out .= $sep . $nl . $nl;
 
 		// ── Environment ────────────────────────────────────────────────────
-		$out .= '-- ENVIRONMENT --' . $nl;
-		$out .= $this->txt_row( 'WordPress Version',   $env['wp_version'] );
-		$out .= $this->txt_row( 'PHP Version',         $php['version'] );
-		$out .= $this->txt_row( 'PHP Architecture',    $php['architecture'] );
-		$out .= $this->txt_row( 'Site URL',            $env['wp_site_url'] );
-		$out .= $this->txt_row( 'WordPress URL',       $env['wp_home_url'] );
-		$out .= $this->txt_row( 'Multisite',           $env['is_multisite'] ? 'Yes' : 'No' );
-		$out .= $this->txt_row( 'WP_DEBUG',            $env['wp_debug'] ? 'Enabled (WARNING)' : 'Disabled' );
-		$out .= $this->txt_row( 'WP_DEBUG_LOG',        $env['wp_debug_log'] ? 'Enabled' : 'Disabled' );
-		$out .= $this->txt_row( 'SCRIPT_DEBUG',        $env['script_debug'] ? 'Enabled' : 'Disabled' );
-		$out .= $this->txt_row( 'DISABLE_WP_CRON',     $env['wp_cron_disabled'] ? 'Enabled' : 'Disabled' );
-		$out .= $this->txt_row( 'WP Memory Limit',     $env['wp_memory_limit'] );
-		$out .= $this->txt_row( 'WP Max Memory Limit', $env['wp_max_memory_limit'] );
-		$out .= $this->txt_row( 'PHP Memory Limit',    $php['memory_limit'] );
-		$out .= $this->txt_row( 'PHP Max Execution',   $php['max_execution'] . 's' );
-		$out .= $this->txt_row( 'PHP Max Input Vars',  $php['max_input_vars'] );
-		$out .= $this->txt_row( 'PHP Post Max Size',   $php['post_max_size'] );
-		$out .= $this->txt_row( 'PHP Upload Max Size', $php['upload_max_size'] );
-		$out .= $this->txt_row( 'PHP Display Errors',  $php['display_errors'] );
-		$out .= $this->txt_row( 'Server Software',     $srv['software'] );
-		$out .= $this->txt_row( 'PHP SAPI',            $srv['php_sapi'] );
+		$out .= __( '-- ENVIRONMENT --', 'site-info-scout' ) . $nl;
+		$out .= $this->txt_row( __( 'WordPress Version',   'site-info-scout' ), $env['wp_version'] );
+		$out .= $this->txt_row( __( 'PHP Version',         'site-info-scout' ), $php['version'] );
+		$out .= $this->txt_row( __( 'PHP Architecture',    'site-info-scout' ), $php['architecture'] );
+		$out .= $this->txt_row( __( 'Site URL',            'site-info-scout' ), $env['wp_site_url'] );
+		$out .= $this->txt_row( __( 'WordPress URL',       'site-info-scout' ), $env['wp_home_url'] );
+		$out .= $this->txt_row( __( 'Multisite',           'site-info-scout' ), $env['is_multisite'] ? __( 'Yes', 'site-info-scout' ) : __( 'No', 'site-info-scout' ) );
+		$out .= $this->txt_row( __( 'WP_DEBUG',            'site-info-scout' ), $env['wp_debug'] ? __( 'Enabled (WARNING)', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ) );
+		$out .= $this->txt_row( __( 'WP_DEBUG_LOG',        'site-info-scout' ), $env['wp_debug_log'] ? __( 'Enabled', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ) );
+		$out .= $this->txt_row( __( 'SCRIPT_DEBUG',        'site-info-scout' ), $env['script_debug'] ? __( 'Enabled', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ) );
+		$out .= $this->txt_row( __( 'DISABLE_WP_CRON',     'site-info-scout' ), $env['wp_cron_disabled'] ? __( 'Enabled', 'site-info-scout' ) : __( 'Disabled', 'site-info-scout' ) );
+		$out .= $this->txt_row( __( 'WP Memory Limit',     'site-info-scout' ), $env['wp_memory_limit'] );
+		$out .= $this->txt_row( __( 'WP Max Memory Limit', 'site-info-scout' ), $env['wp_max_memory_limit'] );
+		$out .= $this->txt_row( __( 'PHP Memory Limit',    'site-info-scout' ), $php['memory_limit'] );
+		$out .= $this->txt_row( __( 'PHP Max Execution',   'site-info-scout' ), $php['max_execution'] . 's' );
+		$out .= $this->txt_row( __( 'PHP Max Input Vars',  'site-info-scout' ), $php['max_input_vars'] );
+		$out .= $this->txt_row( __( 'PHP Post Max Size',   'site-info-scout' ), $php['post_max_size'] );
+		$out .= $this->txt_row( __( 'PHP Upload Max Size', 'site-info-scout' ), $php['upload_max_size'] );
+		$out .= $this->txt_row( __( 'PHP Display Errors',  'site-info-scout' ), $php['display_errors'] );
+		$out .= $this->txt_row( __( 'Server Software',     'site-info-scout' ), $srv['software'] );
+		$out .= $this->txt_row( __( 'PHP SAPI',            'site-info-scout' ), $srv['php_sapi'] );
 		$out .= $nl;
 
 		// ── Active theme ───────────────────────────────────────────────────
-		$out .= '-- ACTIVE THEME --' . $nl;
-		$out .= $this->txt_row( 'Name',         $data['theme']['name'] );
-		$out .= $this->txt_row( 'Version',      $data['theme']['version'] );
-		$out .= $this->txt_row( 'Slug',         $data['theme']['template'] );
+		$out .= __( '-- ACTIVE THEME --', 'site-info-scout' ) . $nl;
+		$out .= $this->txt_row( __( 'Name',         'site-info-scout' ), $data['theme']['name'] );
+		$out .= $this->txt_row( __( 'Version',      'site-info-scout' ), $data['theme']['version'] );
+		$out .= $this->txt_row( __( 'Slug',         'site-info-scout' ), $data['theme']['template'] );
 		$parent_str = null !== $data['theme']['parent_name']
 			? $data['theme']['parent_name'] . ' v' . $data['theme']['parent_version']
-			: 'None';
-		$out .= $this->txt_row( 'Parent Theme', $parent_str );
+			: __( 'None', 'site-info-scout' );
+		$out .= $this->txt_row( __( 'Parent Theme', 'site-info-scout' ), $parent_str );
 		$out .= $nl;
 
 		// ── Active plugins ─────────────────────────────────────────────────
 		$plugin_count = count( $data['plugins'] );
-		$out .= '-- ACTIVE PLUGINS (' . $plugin_count . ') --' . $nl;
+		/* translators: %d: Number of active plugins. */
+		$out .= sprintf( __( '-- ACTIVE PLUGINS (%d) --', 'site-info-scout' ), $plugin_count ) . $nl;
 		$i = 1;
 		foreach ( $data['plugins'] as $plugin ) {
 			$out .= $i . '. ' . $plugin['name'] . ' -- v' . $plugin['version'] . $nl;
@@ -197,7 +205,7 @@ class Export_Controller {
 		$out .= $nl;
 
 		$out .= $sep . $nl;
-		$out .= 'Generated by Site Info Scout (Zignites)' . $nl;
+		$out .= __( 'Generated by Site Info Scout (Zignites)', 'site-info-scout' ) . $nl;
 		$out .= $sep . $nl;
 
 		return $out;

@@ -65,6 +65,7 @@ class Plugin {
 	/**
 	 * Initializes the plugin singleton. Called on plugins_loaded.
 	 *
+	 * @since 1.0.0
 	 * @return Plugin
 	 */
 	public static function init() {
@@ -78,6 +79,7 @@ class Plugin {
 	/**
 	 * Returns the singleton instance (null before plugins_loaded fires).
 	 *
+	 * @since 1.0.0
 	 * @return Plugin|null
 	 */
 	public static function get_instance() {
@@ -90,7 +92,6 @@ class Plugin {
 	 * Registers all WordPress action hooks for the plugin.
 	 */
 	private function register_hooks() {
-		add_action( 'init',                 array( $this, 'load_textdomain' ) );
 		add_action( 'admin_menu',           array( $this, 'register_menu' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 
@@ -108,23 +109,11 @@ class Plugin {
 	// ── Public hook callbacks ──────────────────────────────────────────────
 
 	/**
-	 * Loads the plugin text domain for translations.
-	 *
-	 * The path is relative to WP_PLUGIN_DIR, as required by
-	 * load_plugin_textdomain().
-	 */
-	public function load_textdomain() {
-		load_plugin_textdomain(
-			'site-info-scout',
-			false,
-			dirname( ZIGSITEINFOSCOUT_BASENAME ) . '/languages'
-		);
-	}
-
-	/**
 	 * Registers the admin Tools menu page.
 	 *
 	 * The returned hook suffix is stored and used to scope asset enqueuing.
+	 *
+	 * @since 1.0.0
 	 */
 	public function register_menu() {
 		add_management_page(
@@ -142,6 +131,7 @@ class Plugin {
 	 * The hook suffix for a Tools sub-page follows the pattern:
 	 * tools_page_{$menu_slug}, e.g. tools_page_site-info-scout.
 	 *
+	 * @since 1.0.0
 	 * @param string $hook_suffix The current admin page hook suffix.
 	 */
 	public function enqueue_assets( $hook_suffix ) {

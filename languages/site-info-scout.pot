@@ -15,3 +15,358 @@ msgstr ""
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "X-Generator: WP-CLI 2.x\n"
 "X-Domain: site-info-scout\n"
+
+#. includes/class-plugin.php
+#: includes/class-plugin.php:137
+#: includes/class-plugin.php:138
+msgid "Site Info Scout"
+msgstr ""
+
+#. includes/class-export-controller.php
+#: includes/class-export-controller.php:51
+#: includes/class-export-controller.php:82
+msgid "You do not have permission to export reports."
+msgstr ""
+
+#: includes/class-export-controller.php:156
+msgid "SITE INFO SCOUT -- SITE REPORT"
+msgstr ""
+
+#. translators: 1: Date/time string. 2: Timezone identifier e.g. America/New_York.
+#: includes/class-export-controller.php:158
+msgid "Generated  : %1$s (%2$s)"
+msgstr ""
+
+#: includes/class-export-controller.php:162
+msgid "-- ENVIRONMENT --"
+msgstr ""
+
+#: includes/class-export-controller.php:163
+#: includes/class-admin-page.php:182
+msgid "WordPress Version"
+msgstr ""
+
+#: includes/class-export-controller.php:164
+#: includes/class-admin-page.php:183
+#: includes/class-health-checks.php:59
+msgid "PHP Version"
+msgstr ""
+
+#: includes/class-export-controller.php:165
+#: includes/class-admin-page.php:184
+msgid "PHP Architecture"
+msgstr ""
+
+#: includes/class-export-controller.php:166
+#: includes/class-admin-page.php:185
+msgid "Site URL"
+msgstr ""
+
+#: includes/class-export-controller.php:167
+#: includes/class-admin-page.php:186
+msgid "WordPress URL"
+msgstr ""
+
+#: includes/class-export-controller.php:168
+#: includes/class-admin-page.php:187
+msgid "Multisite"
+msgstr ""
+
+#: includes/class-export-controller.php:168
+#: includes/class-admin-page.php:187
+#: includes/class-admin-page.php:195
+msgid "Yes"
+msgstr ""
+
+#: includes/class-export-controller.php:168
+#: includes/class-admin-page.php:187
+#: includes/class-admin-page.php:195
+msgid "No"
+msgstr ""
+
+#: includes/class-export-controller.php:169
+#: includes/class-admin-page.php:189
+msgid "WP_DEBUG"
+msgstr ""
+
+#: includes/class-export-controller.php:169
+msgid "Enabled (WARNING)"
+msgstr ""
+
+#: includes/class-export-controller.php:169
+#: includes/class-export-controller.php:170
+#: includes/class-export-controller.php:171
+#: includes/class-export-controller.php:172
+#: includes/class-admin-page.php:189
+#: includes/class-admin-page.php:193
+#: includes/class-admin-page.php:196
+#: includes/class-admin-page.php:198
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-export-controller.php:169
+#: includes/class-export-controller.php:170
+#: includes/class-export-controller.php:171
+#: includes/class-export-controller.php:172
+#: includes/class-admin-page.php:189
+#: includes/class-admin-page.php:193
+#: includes/class-admin-page.php:196
+#: includes/class-admin-page.php:198
+msgid "Enabled"
+msgstr ""
+
+#: includes/class-export-controller.php:170
+#: includes/class-admin-page.php:192
+msgid "WP_DEBUG_LOG"
+msgstr ""
+
+#: includes/class-export-controller.php:171
+#: includes/class-admin-page.php:196
+msgid "SCRIPT_DEBUG"
+msgstr ""
+
+#: includes/class-export-controller.php:172
+#: includes/class-admin-page.php:197
+msgid "DISABLE_WP_CRON"
+msgstr ""
+
+#: includes/class-export-controller.php:173
+#: includes/class-admin-page.php:199
+msgid "WP Memory Limit"
+msgstr ""
+
+#: includes/class-export-controller.php:174
+#: includes/class-admin-page.php:200
+msgid "WP Max Memory Limit"
+msgstr ""
+
+#: includes/class-export-controller.php:175
+#: includes/class-admin-page.php:201
+msgid "PHP Memory Limit"
+msgstr ""
+
+#: includes/class-export-controller.php:176
+#: includes/class-admin-page.php:202
+msgid "PHP Max Execution"
+msgstr ""
+
+#: includes/class-export-controller.php:177
+#: includes/class-admin-page.php:203
+msgid "PHP Max Input Vars"
+msgstr ""
+
+#: includes/class-export-controller.php:178
+#: includes/class-admin-page.php:204
+msgid "PHP Post Max Size"
+msgstr ""
+
+#: includes/class-export-controller.php:179
+msgid "PHP Upload Max Size"
+msgstr ""
+
+#: includes/class-admin-page.php:205
+msgid "PHP Upload Max"
+msgstr ""
+
+#: includes/class-export-controller.php:180
+#: includes/class-admin-page.php:206
+msgid "PHP Display Errors"
+msgstr ""
+
+#: includes/class-export-controller.php:181
+#: includes/class-admin-page.php:207
+msgid "Server Software"
+msgstr ""
+
+#: includes/class-export-controller.php:182
+#: includes/class-admin-page.php:208
+msgid "PHP SAPI"
+msgstr ""
+
+#: includes/class-export-controller.php:185
+msgid "-- ACTIVE THEME --"
+msgstr ""
+
+#: includes/class-export-controller.php:186
+msgid "Name"
+msgstr ""
+
+#: includes/class-export-controller.php:187
+#: includes/class-admin-page.php:222
+#: includes/class-admin-page.php:261
+msgid "Version"
+msgstr ""
+
+#: includes/class-export-controller.php:188
+#: includes/class-admin-page.php:223
+msgid "Slug"
+msgstr ""
+
+#: includes/class-export-controller.php:191
+#: includes/class-admin-page.php:225
+#: includes/class-admin-page.php:228
+msgid "Parent Theme"
+msgstr ""
+
+#: includes/class-export-controller.php:191
+msgid "None"
+msgstr ""
+
+#. translators: %d: Number of active plugins.
+#: includes/class-export-controller.php:194
+msgid "-- ACTIVE PLUGINS (%d) --"
+msgstr ""
+
+#: includes/class-export-controller.php:202
+msgid "Generated by Site Info Scout (Zignites)"
+msgstr ""
+
+#. includes/class-health-checks.php
+#. translators: 1: Current PHP version. 2: Minimum recommended PHP version.
+#: includes/class-health-checks.php:62
+msgid "PHP %1$s is below the recommended minimum of PHP %2$s. Consider upgrading your PHP version."
+msgstr ""
+
+#: includes/class-health-checks.php:83
+msgid "WP_DEBUG Enabled"
+msgstr ""
+
+#: includes/class-health-checks.php:84
+msgid "WP_DEBUG is enabled. This should be disabled on production sites to prevent PHP notices from being shown to visitors."
+msgstr ""
+
+#: includes/class-health-checks.php:102
+msgid "WP_DEBUG_LOG Enabled"
+msgstr ""
+
+#: includes/class-health-checks.php:103
+msgid "WP_DEBUG_LOG is enabled. Error output is being written to a log file. Ensure the log file is not publicly accessible."
+msgstr ""
+
+#: includes/class-health-checks.php:121
+msgid "WP-Cron Disabled"
+msgstr ""
+
+#: includes/class-health-checks.php:122
+msgid "DISABLE_WP_CRON is enabled. Scheduled tasks will not run automatically via page loads. Ensure a real server-side cron job is configured."
+msgstr ""
+
+#: includes/class-health-checks.php:145
+msgid "High Plugin Count"
+msgstr ""
+
+#. translators: 1: Number of active plugins. 2: High plugin count threshold.
+#: includes/class-health-checks.php:148
+msgid "You have %1$d active plugins. Running %2$d or more plugins may increase page load times and the risk of conflicts."
+msgstr ""
+
+#: includes/class-health-checks.php:176
+msgid "Low Memory Limit"
+msgstr ""
+
+#. translators: %s: Current PHP memory limit value.
+#: includes/class-health-checks.php:179
+msgid "PHP memory limit is set to %s. WordPress recommends at least 64 MB; 256 MB is ideal for sites with many plugins."
+msgstr ""
+
+#. includes/class-admin-page.php
+#: includes/class-admin-page.php:60
+msgid "You do not have permission to view this page."
+msgstr ""
+
+#: includes/class-admin-page.php:73
+msgid "Report copied to clipboard!"
+msgstr ""
+
+#: includes/class-admin-page.php:74
+msgid "Copy failed. Please use the Download TXT button instead."
+msgstr ""
+
+#: includes/class-admin-page.php:97
+msgid "A read-only support snapshot of this WordPress site. No data is sent externally."
+msgstr ""
+
+#. translators: %s: Date and time the report was generated.
+#: includes/class-admin-page.php:101
+msgid "Report generated: %s"
+msgstr ""
+
+#: includes/class-admin-page.php:132
+msgid "All checks passed."
+msgstr ""
+
+#: includes/class-admin-page.php:133
+msgid "No common issues were detected on this site."
+msgstr ""
+
+#: includes/class-admin-page.php:160
+msgid "Environment"
+msgstr ""
+
+#: includes/class-admin-page.php:163
+#: includes/class-admin-page.php:217
+msgid "Setting"
+msgstr ""
+
+#: includes/class-admin-page.php:164
+#: includes/class-admin-page.php:218
+msgid "Value"
+msgstr ""
+
+#: includes/class-admin-page.php:212
+msgid "Active Theme"
+msgstr ""
+
+#: includes/class-admin-page.php:221
+msgid "Theme Name"
+msgstr ""
+
+#: includes/class-admin-page.php:226
+msgid "Parent Version"
+msgstr ""
+
+#: includes/class-admin-page.php:228
+msgid "None (standalone)"
+msgstr ""
+
+#. translators: %d: Number of active plugins.
+#: includes/class-admin-page.php:238
+msgid "Active Plugins (%d)"
+msgstr ""
+
+#: includes/class-admin-page.php:243
+msgid "No active plugins found."
+msgstr ""
+
+#: includes/class-admin-page.php:248
+msgid "#"
+msgstr ""
+
+#: includes/class-admin-page.php:249
+msgid "Plugin Name"
+msgstr ""
+
+#: includes/class-admin-page.php:251
+msgid "File"
+msgstr ""
+
+#: includes/class-admin-page.php:309
+msgid "Export Report"
+msgstr ""
+
+#: includes/class-admin-page.php:310
+msgid "Download or copy the site report to share with your support team."
+msgstr ""
+
+#: includes/class-admin-page.php:315
+msgid "Copy Report to Clipboard"
+msgstr ""
+
+#: includes/class-admin-page.php:320
+msgid "Download TXT Report"
+msgstr ""
+
+#: includes/class-admin-page.php:324
+msgid "Export CSV Inventory"
+msgstr ""
+

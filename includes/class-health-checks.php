@@ -24,6 +24,7 @@ class Health_Checks {
 	 *
 	 * An empty return value means all checks passed.
 	 *
+	 * @since 1.0.0
 	 * @param array $report Normalized report from Environment_Report::get_report().
 	 * @return array[] Each flag: { id, label, message, severity ('warning'|'info') }.
 	 */
@@ -56,8 +57,8 @@ class Health_Checks {
 			return array(
 				'id'       => 'php_version',
 				'label'    => __( 'PHP Version', 'site-info-scout' ),
-				/* translators: 1: Current PHP version string, 2: Minimum recommended PHP version string. */
 				'message'  => sprintf(
+					/* translators: 1: Current PHP version string. 2: Minimum recommended PHP version string. */
 					__( 'PHP %1$s is below the recommended minimum of PHP %2$s. Consider upgrading your PHP version.', 'site-info-scout' ),
 					$report['php']['version'],
 					$min
@@ -142,8 +143,8 @@ class Health_Checks {
 			return array(
 				'id'      => 'plugin_count',
 				'label'   => __( 'High Plugin Count', 'site-info-scout' ),
-				/* translators: 1: Number of active plugins, 2: The threshold number. */
-				'message' => sprintf(
+			'message' => sprintf(
+				/* translators: 1: Number of active plugins. 2: The high plugin count threshold number. */
 					__( 'You have %1$d active plugins. Running %2$d or more plugins may increase page load times and the risk of conflicts.', 'site-info-scout' ),
 					$count,
 					$threshold
@@ -173,8 +174,8 @@ class Health_Checks {
 			return array(
 				'id'      => 'memory_limit',
 				'label'   => __( 'Low Memory Limit', 'site-info-scout' ),
+			'message' => sprintf(
 				/* translators: %s: Current PHP memory_limit value, e.g. '32M'. */
-				'message' => sprintf(
 					__( 'PHP memory limit is set to %s. WordPress recommends at least 64 MB; 256 MB is ideal for sites with many plugins.', 'site-info-scout' ),
 					$limit
 				),
