@@ -122,7 +122,6 @@ class Admin_Page {
 				</span>
 			</p>
 
-			<?php $this->render_health_flags( $flags ); ?>
 			<?php $this->render_insights( $insights ); ?>
 
 			<div class="zigsiteinfoscout-grid">
@@ -155,20 +154,14 @@ class Admin_Page {
 			$score_label = __( 'Needs Attention', 'site-info-scout' );
 		}
 		?>
-		<div class="zigsiteinfoscout-score-bar">
-			<span class="zigsiteinfoscout-score-label">
-				<?php esc_html_e( 'Health Score:', 'site-info-scout' ); ?>
-			</span>
-			<span class="zigsiteinfoscout-score-badge <?php echo esc_attr( $score_class ); ?>">
-				<?php
-				printf(
-					/* translators: 1: Numeric score 0-100. 2: Score label e.g. Good, Fair, Needs Attention. */
-					esc_html__( '%1$d / 100 — %2$s', 'site-info-scout' ),
-					intval( $score ),
-					esc_html( $score_label )
-				);
-				?>
-			</span>
+		<div class="zigsiteinfoscout-score-card">
+			<div class="zigsiteinfoscout-score-badge <?php echo esc_attr( $score_class ); ?>">
+				<?php echo intval( $score ); ?><span class="zigsiteinfoscout-score-badge__denom"> / 100</span>
+			</div>
+			<div class="zigsiteinfoscout-score-meta">
+				<strong class="zigsiteinfoscout-score-label"><?php echo esc_html( $score_label ); ?></strong>
+				<span class="zigsiteinfoscout-score-note"><?php esc_html_e( 'Health Score — based on common support-risk indicators.', 'site-info-scout' ); ?></span>
+			</div>
 		</div>
 		<?php
 	}
@@ -181,54 +174,28 @@ class Admin_Page {
 	 * @param array $insights Actionable insights from Health_Checks::get_insights().
 	 */
 	private function render_insights( array $insights ) {
-		if ( empty( $insights ) ) {
-			return;
-		}
 		?>
 		<div class="zigsiteinfoscout-card zigsiteinfoscout-card--full zigsiteinfoscout-insights">
-			<h2><?php esc_html_e( 'Insights &amp; Recommendations', 'site-info-scout' ); ?></h2>
-			<?php foreach ( $insights as $insight ) :
-				$notice_class = ( 'warning' === $insight['severity'] ) ? 'notice-warning' : 'notice-info';
-				?>
-				<div class="notice <?php echo esc_attr( $notice_class ); ?> zigsiteinfoscout-notice zigsiteinfoscout-insight-item">
-					<p><?php echo esc_html( $insight['message'] ); ?></p>
-				</div>
-			<?php endforeach; ?>
+			<h2><?php esc_html_e( 'Insights & Recommendations', 'site-info-scout' ); ?></h2>
+			<?php if ( empty( $insights ) ) : ?>
+				<p class="zigsiteinfoscout-insights__none">
+					<?php esc_html_e( 'No recommendations at this time. Your site configuration looks healthy.', 'site-info-scout' ); ?>
+				</p>
+			<?php else : ?>
+				<ul class="zigsiteinfoscout-insights__list">
+					<?php foreach ( $insights as $insight ) :
+						$item_class = ( 'warning' === $insight['severity'] )
+							? 'zigsiteinfoscout-insights__item--warning'
+							: 'zigsiteinfoscout-insights__item--info';
+						?>
+						<li class="zigsiteinfoscout-insights__item <?php echo esc_attr( $item_class ); ?>">
+							<?php echo esc_html( $insight['message'] ); ?>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			<?php endif; ?>
 		</div>
 		<?php
-	}
-
-	/**
-	 * Renders the health flags section.
-	 *
-	 * Uses native WordPress .notice classes so no custom warning CSS is needed.
-	 *
-	 * @param array $flags Evaluated health flags from Health_Checks::evaluate().
-	 */
-	private function render_health_flags( array $flags ) {
-		if ( empty( $flags ) ) {
-			?>
-			<div class="notice notice-success zigsiteinfoscout-notice">
-				<p>
-					<strong><?php esc_html_e( 'All checks passed.', 'site-info-scout' ); ?></strong>
-					<?php esc_html_e( 'No common issues were detected on this site.', 'site-info-scout' ); ?>
-				</p>
-			</div>
-			<?php
-			return;
-		}
-
-		foreach ( $flags as $flag ) {
-			$notice_class = ( 'warning' === $flag['severity'] ) ? 'notice-warning' : 'notice-info';
-			?>
-			<div class="notice <?php echo esc_attr( $notice_class ); ?> zigsiteinfoscout-notice">
-				<p>
-					<strong><?php echo esc_html( $flag['label'] ); ?>:</strong>
-					<?php echo esc_html( $flag['message'] ); ?>
-				</p>
-			</div>
-			<?php
-		}
 	}
 
 	/**

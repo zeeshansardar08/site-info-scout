@@ -483,9 +483,19 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#. class-admin-page.php — render_health_score()
+#. class-admin-page.php — render_insights() heading
 #: includes/class-admin-page.php
 msgid "Insights & Recommendations"
+msgstr ""
+
+#. class-admin-page.php — render_insights() — healthy empty state
+#: includes/class-admin-page.php
+msgid "No recommendations at this time. Your site configuration looks healthy."
+msgstr ""
+
+#. class-admin-page.php — render_health_score() — score card note
+#: includes/class-admin-page.php
+msgid "Health Score — based on common support-risk indicators."
 msgstr ""
 
 #. class-admin-page.php — render_export_bar()

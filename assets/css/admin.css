@@ -121,27 +121,55 @@
 
 /* ── Health Score ────────────────────────────────────────────────────────── */
 
-.zigsiteinfoscout-score-bar {
+.zigsiteinfoscout-score-card {
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	margin: 4px 0 18px;
-}
-
-.zigsiteinfoscout-score-label {
-	font-size: 13px;
-	font-weight: 600;
-	color: #1d2327;
+	gap: 16px;
+	margin: 2px 0 20px;
+	padding: 14px 18px;
+	background: #f6f7f7;
+	border: 1px solid #c3c4c7;
+	border-radius: 3px;
 }
 
 .zigsiteinfoscout-score-badge {
-	display: inline-block;
-	padding: 3px 14px;
+	display: flex;
+	align-items: baseline;
+	flex-shrink: 0;
+	padding: 8px 18px;
 	border-radius: 3px;
-	font-size: 13px;
+	font-size: 26px;
 	font-weight: 700;
-	line-height: 1.6;
+	line-height: 1;
 	color: #fff;
+	min-width: 88px;
+	justify-content: center;
+}
+
+.zigsiteinfoscout-score-badge__denom {
+	font-size: 12px;
+	font-weight: 400;
+	opacity: 0.85;
+	align-self: flex-end;
+	margin-bottom: 2px;
+	margin-left: 2px;
+}
+
+.zigsiteinfoscout-score-meta {
+	display: flex;
+	flex-direction: column;
+	gap: 3px;
+}
+
+.zigsiteinfoscout-score-label {
+	font-size: 15px;
+	font-weight: 700;
+	color: #1d2327;
+}
+
+.zigsiteinfoscout-score-note {
+	font-size: 12px;
+	color: #646970;
 }
 
 .zigsiteinfoscout-score--good {
@@ -162,9 +190,39 @@
 	margin-bottom: 20px;
 }
 
-.zigsiteinfoscout-insight-item {
-	margin: 8px 0 0;
-	box-shadow: none;
+.zigsiteinfoscout-insights__none {
+	color: #646970;
+	font-style: italic;
+	margin: 0;
+}
+
+.zigsiteinfoscout-insights__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.zigsiteinfoscout-insights__item {
+	padding: 10px 14px;
+	border-radius: 2px;
+	margin-bottom: 8px;
+	font-size: 13px;
+	line-height: 1.6;
+	border-left: 3px solid #c3c4c7;
+}
+
+.zigsiteinfoscout-insights__item:last-child {
+	margin-bottom: 0;
+}
+
+.zigsiteinfoscout-insights__item--warning {
+	border-left-color: #996800;
+	background: #fef9e7;
+}
+
+.zigsiteinfoscout-insights__item--info {
+	border-left-color: #2271b1;
+	background: #f0f6fc;
 }
 
 /* ── Export bar ─────────────────────────────────────────────────────────── */
